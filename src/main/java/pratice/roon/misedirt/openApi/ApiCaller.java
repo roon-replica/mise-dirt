@@ -1,30 +1,27 @@
 package pratice.roon.misedirt.openApi;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import pratice.roon.misedirt.openApi.dto.Response;
+import pratice.roon.misedirt.openApi.dto.ApiResponse;
+import pratice.roon.misedirt.openApi.dto.Request;
 
-import java.io.IOException;
-import java.util.Arrays;
 
+@Slf4j
 @RestController
 public class ApiCaller {
-    @Value("${openapi.mise.auth-key.encoding}")
-    private String AUTH_ENCODE_KEY;
-
-    @Value("${openapi.mise.auth-key.decoding}")
-    private String AUTH_DECODE_KEY;
+    @Value("${openapi.mise.auth-key.decoded}")
+    private String DECODED_AUTH_KEY;
 
     @Value("${openapi.mise.endpoint}")
     private String END_POINT;
-
-    @Value("${openapi.mise.uri.forcast}")
-    private String FORCAST_URL;
 
     @Value("${openapi.mise.uri.measureByCity}")
     private String CITY_MEASURE_URL;
@@ -32,39 +29,32 @@ public class ApiCaller {
     @Autowired
     private RestTemplate restTemplate;
 
-    private static final ObjectMapper objMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    @GetMapping("/openapi/measure")
-    public String measure() {
+    private String pageSize = "50";
+    private String version = "1.0";
+
+    @GetMapping("/openapi/measure/{sidoName}/{pageNo}")
+    public ApiResponse.Response.Body measure(@PathVariable String sidoName, @PathVariable String pageNo) {
         String BASE_URL = END_POINT + CITY_MEASURE_URL;
 
-        StringBuilder params = new StringBuilder();
-        params.append("?");
-        params.append("serviceKey=" + AUTH_DECODE_KEY);
-        params.append("&");
+        String params = Request.CityMeasure.measureByCityRequestParam(DECODED_AUTH_KEY, "json", pageNo, pageSize, sidoName, version);
+        HttpEntity<String> httpRequestEntity = Request.CityMeasure.jsonRequestHttpEntity(MediaType.APPLICATION_JSON);
 
-        params.append("returnType=json");
-        params.append("&");
+        ResponseEntity<String> response = restTemplate.exchange(BASE_URL + params, HttpMethod.GET, httpRequestEntity, String.class);
 
-        params.append("numOfRows=20");
-        params.append("&");
+        try {
+            ApiResponse cityMeasure = objectMapper.readValue(response.getBody(), ApiResponse.class);
+            return cityMeasure.getResponse().getBody();
 
-        params.append("pageNo=1");
-        params.append("&");
+//            Map<String,Object> responseMap = objectMapper.readValue(response.getBody(),Map.class);
+//            return responseMap.get("body");
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
 
-        params.append("sidoName=서울");
-        params.append("&");
-
-        params.append("ver=1.0");
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
-
-        ResponseEntity<Response.City> response = restTemplate.exchange(BASE_URL + params, HttpMethod.GET, httpEntity, Response.City.class);
-        System.out.println(response.getBody());
-
-        return response.getBody().toString();
+        return null;
     }
+
+
 }
