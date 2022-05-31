@@ -1,14 +1,12 @@
 package pratice.roon.misedirt.openApi.dto;
 
-import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
 import java.util.Arrays;
 
-public class Request {
+public class ApiRequest {
 
     public static class CityMeasure {
         private String serviceKey;
