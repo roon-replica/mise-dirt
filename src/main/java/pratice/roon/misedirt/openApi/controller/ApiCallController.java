@@ -8,7 +8,7 @@ import pratice.roon.misedirt.openApi.dto.ApiResponse;
 import pratice.roon.misedirt.openApi.service.ApiCallService;
 
 @RestController
-public class ApiCallerController {
+public class ApiCallController {
     @Autowired
     private ApiCallService apiCallService;
 

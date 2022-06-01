@@ -55,9 +55,9 @@ public class ApiCallService {
         return null;
     }
 
-    private static final int ONE_MINUTE = 60 * 1000;
+    private static final int TEN_MINUTE = 10 * 60 * 1000;
 
-    @Scheduled(fixedRate = ONE_MINUTE)
+    @Scheduled(fixedRate = TEN_MINUTE)
     @CacheEvict(cacheNames = LocalCacheConfig.openApiCacheManagerName)
     public void evictCache() {
         log.info("[Local Cache] evicted cacheEntry");
