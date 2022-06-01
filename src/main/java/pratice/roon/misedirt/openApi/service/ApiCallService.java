@@ -5,9 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.*;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import pratice.roon.misedirt.openApi.config.LocalCacheConfig;
 import pratice.roon.misedirt.openApi.dto.ApiResponse;
 import pratice.roon.misedirt.openApi.dto.ApiRequest;
 
@@ -32,6 +36,7 @@ public class ApiCallService {
     private String pageSize = "50";
     private String version = "1.0";
 
+    @Cacheable(cacheNames = LocalCacheConfig.openApiCacheManagerName)
     public ApiResponse.Response.Body measureByCity(String sidoName, String pageNo) {
         String BASE_URL = END_POINT + CITY_MEASURE_URL;
 
@@ -49,5 +54,15 @@ public class ApiCallService {
 
         return null;
     }
+
+    private static final int ONE_MINUTE = 60 * 1000;
+
+    @Scheduled(fixedRate = ONE_MINUTE)
+    @CacheEvict(cacheNames = LocalCacheConfig.openApiCacheManagerName)
+    public void evictCache() {
+        log.info("[Local Cache] evicted cacheEntry");
+    }
+
+
 }
 
