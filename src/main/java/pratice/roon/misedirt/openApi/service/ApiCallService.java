@@ -42,7 +42,7 @@ public class ApiCallService {
     private CacheManager cacheManager;
 
     //TODO : 왜 @LogExecutionTime 붙이면 API가 동작을 안하지.. -> @LogExecution AOP가 proceed하면 @Cacheable의 AOP는 무시되나 봄..
-    @LogExecutionTime
+    //@LogExecutionTime
     @Cacheable(cacheNames = LocalCacheConfig.openApiCacheManagerName)
     public ApiResponse.Response.Body measureByCity(String sidoName, String pageNo) {
         String BASE_URL = END_POINT + CITY_MEASURE_URL;

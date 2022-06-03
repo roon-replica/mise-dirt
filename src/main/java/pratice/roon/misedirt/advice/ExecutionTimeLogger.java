@@ -14,6 +14,8 @@ import java.util.concurrent.TimeUnit;
 @Component
 @Aspect
 public class ExecutionTimeLogger {
+
+    //@Around("execution(* pratice.roon.misedirt.openApi.service.ApiCallService*.*(..))")
     @Around("@annotation(LogExecutionTime)")
     public void logAround(ProceedingJoinPoint joinPoint) {
         long start = System.nanoTime();
@@ -29,6 +31,6 @@ public class ExecutionTimeLogger {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         String methodName = methodSignature.getName();
 
-        log.info("[execution time] " + methodName + "= " + (end - start) / 1_000_000 + " ms");
+        log.info( methodName + "= " + (end - start) / 1_000_000 + " ms");
     }
 }
