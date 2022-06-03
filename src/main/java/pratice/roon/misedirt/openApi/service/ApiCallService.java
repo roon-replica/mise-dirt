@@ -5,12 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import pratice.roon.misedirt.advice.LogExecutionTime;
 import pratice.roon.misedirt.openApi.config.LocalCacheConfig;
 import pratice.roon.misedirt.openApi.dto.ApiResponse;
 import pratice.roon.misedirt.openApi.dto.ApiRequest;
@@ -36,6 +38,11 @@ public class ApiCallService {
     private String pageSize = "50";
     private String version = "1.0";
 
+    @Autowired
+    private CacheManager cacheManager;
+
+    //TODO : 왜 @LogExecutionTime 붙이면 API가 동작을 안하지.. -> @LogExecution AOP가 proceed하면 @Cacheable의 AOP는 무시되나 봄..
+    @LogExecutionTime
     @Cacheable(cacheNames = LocalCacheConfig.openApiCacheManagerName)
     public ApiResponse.Response.Body measureByCity(String sidoName, String pageNo) {
         String BASE_URL = END_POINT + CITY_MEASURE_URL;
@@ -62,7 +69,6 @@ public class ApiCallService {
     public void evictCache() {
         log.info("[Local Cache] evicted cacheEntry");
     }
-
 
 }
 
