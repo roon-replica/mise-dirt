@@ -20,18 +20,24 @@
     CREATE DATABASE {DB명};
     SHOW DATABASES;
   
-    CREATE TABLE region(
-      id int not null auto_increment primary key,
-      name varchar(255) not null
-    );
-    
-    CREATE TABLE dirt(
-      id int not null auto_increment primary key,
-      pm10 int(4),
-      pm25 int(4),
-      date_created datetime default now()
-    );
-    
+  CREATE TABLE `region` (
+  `name` varchar(255) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `modified_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`name`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+  CREATE TABLE `dirt` (
+  `dirt_id` int NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `modified_at` datetime DEFAULT NULL,
+  `pm10` int NOT NULL,
+  `pm25` int NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`dirt_id`),
+  KEY `FKs9xkl768cp2pxhi7vtf8yo0e0` (`name`),
+  CONSTRAINT `FKs9xkl768cp2pxhi7vtf8yo0e0` FOREIGN KEY (`name`) REFERENCES `region` (`name`)
+  ) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
   ```
   
 # spring - db 연결 설정
