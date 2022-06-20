@@ -2,6 +2,7 @@ package pratice.roon.misedirt.openApi.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import pratice.roon.misedirt.openApi.service.PmColor;
 
 import java.util.List;
 
@@ -35,6 +36,32 @@ public class ApiResponse {
                     private String coValue;
                     private String pm10Value;
                     private String pm25Value;
+//                    private String pm10Color;
+//                    private String pm25Color;
+//
+//                    public void setPm10Color(int pm10) {
+//                        if (pm10 < 15) {
+//                            this.pm10Color = PmColor.BLUE.getValue();
+//                        } else if (pm10 < 35) {
+//                            this.pm10Color = PmColor.GREEN.getValue();
+//                        } else if (pm10 < 75) {
+//                            this.pm10Color = PmColor.YELLOW.getValue();
+//                        } else {
+//                            this.pm10Color = PmColor.RED.getValue();
+//                        }
+//                    }
+//
+//                    public void setPm25Color(int pm25) {
+//                        if (pm25 < 15) {
+//                            this.pm10Color = PmColor.BLUE.getValue();
+//                        } else if (pm25 < 35) {
+//                            this.pm10Color = PmColor.GREEN.getValue();
+//                        } else if (pm25 < 75) {
+//                            this.pm10Color = PmColor.YELLOW.getValue();
+//                        } else {
+//                            this.pm10Color = PmColor.RED.getValue();
+//                        }
+//                    }
                 }
             }
         }

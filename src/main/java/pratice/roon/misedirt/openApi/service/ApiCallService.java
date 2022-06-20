@@ -17,6 +17,8 @@ import pratice.roon.misedirt.openApi.config.LocalCacheConfig;
 import pratice.roon.misedirt.openApi.dto.ApiResponse;
 import pratice.roon.misedirt.openApi.dto.ApiRequest;
 
+import java.util.List;
+
 
 @Slf4j
 @Service
@@ -54,6 +56,8 @@ public class ApiCallService {
 
         try {
             ApiResponse cityMeasure = objectMapper.readValue(response.getBody(), ApiResponse.class);
+            //setMiseDirtColors(cityMeasure.getResponse().getBody().getItems());
+
             return cityMeasure.getResponse().getBody();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -61,6 +65,18 @@ public class ApiCallService {
 
         return null;
     }
+
+    private void setMiseDirtColors(List<ApiResponse.Response.Body.Items.Item> items) {
+        for (ApiResponse.Response.Body.Items.Item item : items) {
+            int pm10 = Integer.parseInt(item.getPm10Value());
+            int pm25 = Integer.parseInt(item.getPm25Value());
+
+//            item.setPm10Color(pm10);
+//            item.setPm25Color(pm25);
+
+        }
+    }
+
 
     private static final int TEN_MINUTE = 10 * 60 * 1000;
 
