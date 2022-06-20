@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public enum PmColor {
-    BLUE("text-primary"), GREEN("text-success"), YELLOW("text-warning"), RED("text-danger");
+    BLUE("text-primary"), GREEN("text-success"), YELLOW("text-warning"), RED("text-danger"), UNKNOWN("");
 
     private String miseFontColor;
 
-    public String getValue(){
+    public String getValue() {
         return this.miseFontColor;
     }
 }

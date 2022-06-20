@@ -14,12 +14,12 @@ public class ApiResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     @Data
-    public static class Response{
+    public static class Response {
         private Body body;
 
         @JsonIgnoreProperties(ignoreUnknown = true)
         @Data
-        public static class Body{
+        public static class Body {
             private String resultCode;
             private String totalCount;
             private String pageNo;
@@ -30,38 +30,43 @@ public class ApiResponse {
 
                 @JsonIgnoreProperties(ignoreUnknown = true)
                 @Data
-                public static class Item{
+                public static class Item {
                     private String stationName;
                     private String dataTime;
                     private String coValue;
                     private String pm10Value;
                     private String pm25Value;
-//                    private String pm10Color;
-//                    private String pm25Color;
-//
-//                    public void setPm10Color(int pm10) {
-//                        if (pm10 < 15) {
-//                            this.pm10Color = PmColor.BLUE.getValue();
-//                        } else if (pm10 < 35) {
-//                            this.pm10Color = PmColor.GREEN.getValue();
-//                        } else if (pm10 < 75) {
-//                            this.pm10Color = PmColor.YELLOW.getValue();
-//                        } else {
-//                            this.pm10Color = PmColor.RED.getValue();
-//                        }
-//                    }
-//
-//                    public void setPm25Color(int pm25) {
-//                        if (pm25 < 15) {
-//                            this.pm10Color = PmColor.BLUE.getValue();
-//                        } else if (pm25 < 35) {
-//                            this.pm10Color = PmColor.GREEN.getValue();
-//                        } else if (pm25 < 75) {
-//                            this.pm10Color = PmColor.YELLOW.getValue();
-//                        } else {
-//                            this.pm10Color = PmColor.RED.getValue();
-//                        }
-//                    }
+                    private String pm10Color;
+                    private String pm25Color;
+
+                    public void setPm10Color(int pm10) {
+                        if (pm10 == -1) { //
+                            this.pm10Color = PmColor.UNKNOWN.getValue();
+                            ;
+                        } else if (pm10 < 15) {
+                            this.pm10Color = PmColor.BLUE.getValue();
+                        } else if (pm10 < 35) {
+                            this.pm10Color = PmColor.GREEN.getValue();
+                        } else if (pm10 < 75) {
+                            this.pm10Color = PmColor.YELLOW.getValue();
+                        } else {
+                            this.pm10Color = PmColor.RED.getValue();
+                        }
+                    }
+
+                    public void setPm25Color(int pm25) {
+                        if (pm25 == -1) {
+                            this.pm25Color = PmColor.UNKNOWN.getValue();
+                        } else if (pm25 < 15) {
+                            this.pm25Color = PmColor.BLUE.getValue();
+                        } else if (pm25 < 35) {
+                            this.pm25Color = PmColor.GREEN.getValue();
+                        } else if (pm25 < 75) {
+                            this.pm25Color = PmColor.YELLOW.getValue();
+                        } else {
+                            this.pm25Color = PmColor.RED.getValue();
+                        }
+                    }
                 }
             }
         }

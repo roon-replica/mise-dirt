@@ -56,7 +56,7 @@ public class ApiCallService {
 
         try {
             ApiResponse cityMeasure = objectMapper.readValue(response.getBody(), ApiResponse.class);
-            //setMiseDirtColors(cityMeasure.getResponse().getBody().getItems());
+            setMiseDirtColors(cityMeasure.getResponse().getBody().getItems());
 
             return cityMeasure.getResponse().getBody();
         } catch (JsonProcessingException e) {
@@ -68,11 +68,17 @@ public class ApiCallService {
 
     private void setMiseDirtColors(List<ApiResponse.Response.Body.Items.Item> items) {
         for (ApiResponse.Response.Body.Items.Item item : items) {
-            int pm10 = Integer.parseInt(item.getPm10Value());
-            int pm25 = Integer.parseInt(item.getPm25Value());
+            if (item.getPm10Value().equals("-")) {
+                item.setPm10Color(-1);
+            } else {
+                item.setPm10Color(Integer.parseInt(item.getPm10Value()));
+            }
 
-//            item.setPm10Color(pm10);
-//            item.setPm25Color(pm25);
+            if (item.getPm25Value().equals("-")) {
+                item.setPm25Color(-1);
+            } else {
+                item.setPm25Color(Integer.parseInt(item.getPm25Value()));
+            }
 
         }
     }
