@@ -6,35 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> main page</title>
 
-    <!-- 합쳐지고 최소화된 최신 CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
-    <!-- 부가적인 테마 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
-    <!-- 제이쿼리 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <div th:replace="/mise/fragments/header.html :: header-fragment">...</div>
 
 </head>
 
 <body>
-    <ul class="container">
-        <li class="row">
+<!--    <div th:replace="/mise/fragments/header.html :: header-fragment">...</div>-->
+    <div th:replace="/mise/fragments/navbar.html :: navbar-fragment">...</div>
+
+<!-- 부트스트랩 참고 : https://getbootstrap.com/docs/4.0/layout/grid/-->
+    <div class="container">
+        <h4 class="row">
             <span class="col-md-3">구</span>
             <span class="col-md-3">측정 시각</span>
             <span class="col-md-3">pm 10 수치 </span>
             <span class="col-md-3">pm 25 수치</span>
-        </li>
-        <li th:each="city : ${initialCityMeasure.items}">
+        </h4>
+        <li th:each="city : ${initialCityMeasure.items}" class="row">
             <span class="col-md-3" th:text="${city.stationName}"></span>
             <span class="col-md-3" th:text="${city.pm10Value}"></span>
             <span class="col-md-3" th:text="${city.pm25Value}"></span>
             <span class="col-md-3" th:text="${city.dataTime}"></span>
         </li>
-    </ul>
+    </div>
 
 </body>
 </html>

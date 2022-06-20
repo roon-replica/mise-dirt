@@ -15,7 +15,7 @@ public class PageIndexController {
 
     @GetMapping("/main")
     public ModelAndView main(){
-        ModelAndView modelAndView = new ModelAndView("/mise/main");
+        ModelAndView modelAndView = new ModelAndView("mise/main");
         modelAndView.addObject("initialCityMeasure",apiCallService.measureByCity("서울","1"));
 
         return modelAndView;
