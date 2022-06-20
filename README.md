@@ -9,7 +9,8 @@
 ### 기술 레퍼런스
 - [spring @Value 사용법](https://www.baeldung.com/spring-value-annotation)
 - [thymeleaf로 html class 동적으로 추가하기 ](https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=writer0713&logNo=221465984855)
-
+- [기존 테이블에 외래키 추가하기](https://hoho325.tistory.com/62)
+- [테이블 DDL 확인하기](https://stackoverflow.com/questions/201621/how-do-i-see-all-foreign-keys-to-a-table-or-column)
 
 ### TODO
 - [ ] 캐시 적용
@@ -31,6 +32,14 @@
 - [ ] OPEN API 서버가 터졌을 때 대응 정책
   1. 캐시된거 보여주기
   2. cache 초기화되면 DB에 있는 가장 최근거 보여주기
+
+- [ ] 예외 처리
+  - [ ] OPEN API가 응답하지 않을 때
+
+### 생각해 볼 사항들
+- [ ] pm 색상 설정하는 로직 개선할 수 없을지...
+- [ ] m1 맥에는 mysql workbench 설치 안 되는 듯...
+- [ ] 지역 테이블이 미세먼지 테이블의 외래키를 가지고 있어야 하나? 아니면 반대여야 하나?
 
 - [ ] pm 색상 설정하는 로직 개선할 수 없을지...
 

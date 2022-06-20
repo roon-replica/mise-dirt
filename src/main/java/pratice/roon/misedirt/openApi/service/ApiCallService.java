@@ -12,11 +12,15 @@ import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import pratice.roon.misedirt.advice.LogExecutionTime;
 import pratice.roon.misedirt.openApi.config.LocalCacheConfig;
 import pratice.roon.misedirt.openApi.dto.ApiResponse;
 import pratice.roon.misedirt.openApi.dto.ApiRequest;
+import pratice.roon.misedirt.openApi.entity.Dirt;
+import pratice.roon.misedirt.openApi.entity.Region;
+import pratice.roon.misedirt.openApi.entity.repository.DirtRepository;
+import pratice.roon.misedirt.openApi.entity.repository.RegionRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 
@@ -34,6 +38,12 @@ public class ApiCallService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private DirtRepository dirtRepository;
+
+    @Autowired
+    private RegionRepository regionRepository;
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -58,6 +68,8 @@ public class ApiCallService {
             ApiResponse cityMeasure = objectMapper.readValue(response.getBody(), ApiResponse.class);
             setMiseDirtColors(cityMeasure.getResponse().getBody().getItems());
 
+            saveDirtByRegion(cityMeasure.getResponse().getBody().getItems());
+
             return cityMeasure.getResponse().getBody();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -65,6 +77,33 @@ public class ApiCallService {
 
         return null;
     }
+
+    @Transactional
+    protected void saveDirtByRegion(List<ApiResponse.Response.Body.Items.Item> items) {
+        for (ApiResponse.Response.Body.Items.Item item : items) {
+            Region region = Region.builder()
+                    .name(item.getStationName())
+                    .build();
+
+            regionRepository.save(region);
+
+            String pm10 = item.getPm10Value();
+            String pm25 = item.getPm25Value();
+
+            // TODO : -1로 설정하는건 별로인듯.. pm 값 저장할 때 문자열로 하는게 나은가?
+            if(pm10.equals("-")) pm10 = "-1";
+            if(pm25.equals("-")) pm25 = "-1";
+
+            Dirt dirt = Dirt.builder()
+                    .pm10(Integer.parseInt(pm10))
+                    .pm25(Integer.parseInt(pm25))
+                    .region(region)
+                    .build();
+
+            dirtRepository.save(dirt);
+        }
+    }
+
 
     private void setMiseDirtColors(List<ApiResponse.Response.Body.Items.Item> items) {
         for (ApiResponse.Response.Body.Items.Item item : items) {
