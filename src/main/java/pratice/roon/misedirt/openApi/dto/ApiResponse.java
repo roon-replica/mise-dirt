@@ -42,7 +42,6 @@ public class ApiResponse {
                     public void setPm10Color(int pm10) {
                         if (pm10 == -1) { //
                             this.pm10Color = PmColor.UNKNOWN.getValue();
-                            ;
                         } else if (pm10 < 15) {
                             this.pm10Color = PmColor.BLUE.getValue();
                         } else if (pm10 < 35) {
