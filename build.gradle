@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.0'
+    id 'org.springframework.boot' version '2.6.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
@@ -18,18 +18,21 @@ repositories {
     mavenCentral()
 }
 
+
 dependencies {
+    ext.springBootVersion = '2.6.0'
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.7.0'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: "$springBootVersion"
 
-    implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.7.0'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: "$springBootVersion"
 
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '2.7.0'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: "$springBootVersion"
 
     implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '3.0.0'
 
@@ -37,8 +40,10 @@ dependencies {
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
 
     // JPA
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.7.0'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: "$springBootVersion"
 
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: "$springBootVersion"
 
 }
 
