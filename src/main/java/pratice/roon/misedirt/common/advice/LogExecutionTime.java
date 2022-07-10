@@ -1,4 +1,4 @@
-package pratice.roon.misedirt.advice;
+package pratice.roon.misedirt.common.advice;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

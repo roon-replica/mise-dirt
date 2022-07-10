@@ -1,4 +1,4 @@
-package pratice.roon.misedirt.advice;
+package pratice.roon.misedirt.common.advice;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -6,9 +6,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
-
-import java.lang.reflect.Method;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Component

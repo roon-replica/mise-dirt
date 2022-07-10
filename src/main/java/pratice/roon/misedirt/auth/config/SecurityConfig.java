@@ -20,7 +20,7 @@ import pratice.roon.misedirt.auth.service.MemberService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -36,6 +36,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // defines which URL paths should be secured
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/", "/enroll").permitAll();
+
         http.authorizeRequests()
                 .anyRequest().authenticated();
 

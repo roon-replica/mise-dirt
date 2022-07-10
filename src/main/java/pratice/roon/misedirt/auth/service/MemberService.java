@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pratice.roon.misedirt.auth.dto.AuthDTO;
 import pratice.roon.misedirt.auth.entity.Member;
 import pratice.roon.misedirt.auth.repository.MemberRepository;
@@ -30,5 +31,19 @@ public class MemberService implements UserDetailsService {
                     Arrays.asList(new SimpleGrantedAuthority("ROLE_" + member.getMemberRole()))
             );
         }
+    }
+
+    @Transactional
+    public void enrollUser(String username, String password){
+        Member member = Member.builder()
+                .username(username)
+                .password(password)
+                .build();
+
+        if(memberRepository.findByUsername(username) != null){
+            throw new IllegalArgumentException("member with username "+ username +" already exist");
+        }
+
+        memberRepository.save(member);
     }
 }

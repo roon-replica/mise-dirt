@@ -1,4 +1,4 @@
-package pratice.roon.misedirt.exception;
+package pratice.roon.misedirt.common.exception;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
