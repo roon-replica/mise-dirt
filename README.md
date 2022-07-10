@@ -11,6 +11,9 @@
 - [thymeleaf로 html class 동적으로 추가하기 ](https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=writer0713&logNo=221465984855)
 - [기존 테이블에 외래키 추가하기](https://hoho325.tistory.com/62)
 - [테이블 DDL 확인하기](https://stackoverflow.com/questions/201621/how-do-i-see-all-foreign-keys-to-a-table-or-column)
+- form login
+  - https://spring.io/guides/gs/securing-web/
+  - https://www.baeldung.com/spring-security-login
 
 ### TODO
 - [ ] 캐시 적용
@@ -27,6 +30,9 @@
 - [ ] 미세먼지 API 불러올 때 마다 DB에 저장해보기
 - [ ] aws에 배포해보기
 - [ ] 로그인 구현하기
+  - [x] form 로그인
+  - [ ] 소셜 로그인
+  
 - [ ] JWT 적용해서 API 인증된 사람만 호출할 수 있도록 하기
 - [x] 미세먼지 pm값에 따라 화면에 표시할 때 색상 표시하기
 - [ ] OPEN API 서버가 터졌을 때 대응 정책
@@ -40,8 +46,5 @@
 - [ ] pm 색상 설정하는 로직 개선할 수 없을지...
 - [ ] m1 맥에는 mysql workbench 설치 안 되는 듯...
 - [ ] 지역 테이블이 미세먼지 테이블의 외래키를 가지고 있어야 하나? 아니면 반대여야 하나?
-
-- [ ] pm 색상 설정하는 로직 개선할 수 없을지...
-
 - [ ] 도시별 미세먼지 정보 선택할 수 있도록 하기
 - [ ] 페이지네이션
