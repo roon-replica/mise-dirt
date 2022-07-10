@@ -30,6 +30,9 @@
   - https://blog.jiniworld.me/81
 
 - [x] 미세먼지 API 불러올 때 마다 DB에 저장해보기
+- [ ] 도시별 미세먼지 정보 선택할 수 있도록 하기
+- [ ] 페이지네이션
+  
 - [ ] nginx 연결하기
 - [ ] aws에 배포해보기
 - [ ] 로그인 구현하기
@@ -38,14 +41,13 @@
   
 - [ ] remember me
   
-- [ ] cache-control header?
+- [x] override default cache-control header
   
 - [ ] custom logout
-  
 
 - [ ] 회원가입 구현
   - [x] 회원 가입
-    - [ ] validate
+    - [x] validate DTO
   - [ ] 회원 정보 수정
   - [ ] 탈퇴
   
@@ -56,6 +58,7 @@
   1. 캐시된거 보여주기
   2. cache 초기화되면 DB에 있는 가장 최근거 보여주기
 
+
 - [ ] 예외 처리
   - [ ] OPEN API가 응답하지 않을 때
   
@@ -64,5 +67,3 @@
 - [ ] pm 색상 설정하는 로직 개선할 수 없을지...
 - [ ] m1 맥에는 mysql workbench 설치 안 되는 듯...
 - [ ] 지역 테이블이 미세먼지 테이블의 외래키를 가지고 있어야 하나? 아니면 반대여야 하나?
-- [ ] 도시별 미세먼지 정보 선택할 수 있도록 하기
-- [ ] 페이지네이션
