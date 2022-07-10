@@ -1,7 +1,9 @@
 ### 기획 아이디어
-- 현재 미세먼지 측정치 + 미세먼지 예보 알려주기
-- 도시별 미세먼지 정보 선택해서 볼 수 있도록 하기
-- 미세먼지 수치(PM 값)에 따라 색상 표시하기
+-[X] 현재 미세먼지 측정치
+-[X] 미세먼지 수치(PM 값)에 따라 색상 표시하기
+
+-[ ] 미세먼지 예보 알려주기
+-[ ] 도시별 미세먼지 정보 선택해서 볼 수 있도록 하기
 
 ### 사용한 공공 API
 - https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15073861
@@ -28,11 +30,19 @@
   - https://blog.jiniworld.me/81
 
 - [x] 미세먼지 API 불러올 때 마다 DB에 저장해보기
+- [ ] nginx 연결하기
 - [ ] aws에 배포해보기
 - [ ] 로그인 구현하기
   - [x] form 로그인
   - [ ] 소셜 로그인
   
+- [ ] remember me
+  
+- [ ] cache-control header?
+  
+- [ ] custom logout
+  
+
 - [ ] 회원가입 구현
   - [x] 회원 가입
     - [ ] validate

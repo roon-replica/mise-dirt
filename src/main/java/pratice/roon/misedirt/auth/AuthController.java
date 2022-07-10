@@ -3,7 +3,9 @@ package pratice.roon.misedirt.auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SpringWebConstraintValidatorFactory;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 import pratice.roon.misedirt.auth.dto.AuthDTO;
 import pratice.roon.misedirt.auth.dto.SignUpDTO;
@@ -30,8 +32,10 @@ public class AuthController {
     public String enroll(){ return "enroll";}
 
     @PostMapping("/enroll")
-    public RedirectView enroll(SignUpDTO signUpDTO){
-        System.out.println(signUpDTO);
+    public View enroll(SignUpDTO signUpDTO){
+        if(signUpDTO.isPasswordMatched() == false){
+            throw new IllegalArgumentException("password != matching password");
+        }
 
         memberService.enrollUser(signUpDTO.getUsername(), signUpDTO.getPassword());
 

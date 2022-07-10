@@ -34,15 +34,17 @@ public class MemberService implements UserDetailsService {
     }
 
     @Transactional
-    public void enrollUser(String username, String password){
+    public void enrollUser(String username, String password) {
+        if (memberRepository.findByUsername(username) != null) {
+            throw new IllegalArgumentException("member with username " + username + " already exist");
+        }
+
         Member member = Member.builder()
                 .username(username)
                 .password(password)
                 .build();
 
-        if(memberRepository.findByUsername(username) != null){
-            throw new IllegalArgumentException("member with username "+ username +" already exist");
-        }
+
 
         memberRepository.save(member);
     }
