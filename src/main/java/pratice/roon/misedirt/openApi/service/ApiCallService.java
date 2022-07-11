@@ -10,6 +10,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import pratice.roon.misedirt.openApi.config.LocalCacheConfig;
@@ -62,6 +63,8 @@ public class ApiCallService {
         String params = ApiRequest.CityMeasure.measureByCityRequestParam(DECODED_AUTH_KEY, "json", pageNo, pageSize, sidoName, version);
         HttpEntity<String> httpRequestEntity = ApiRequest.CityMeasure.jsonRequestHttpEntity(MediaType.APPLICATION_JSON);
 
+        // httpRequestEntity.getHeaders().set("Authorization", "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTc1NDIyNTUsImV4cCI6MTY1NzU0NTg1NSwic3ViIjoidXNlcjEifQ.lWafMhXTDYt9_0Wg_5RmYD4b7GC6bpvfUpaJdMjbqMY");
+//        httpRequestEntity.getHeaders().setBearerAuth(SecurityContextHolder.getContext().getAuthentication().);
         ResponseEntity<String> response = restTemplate.exchange(BASE_URL + params, HttpMethod.GET, httpRequestEntity, String.class);
 
         try {

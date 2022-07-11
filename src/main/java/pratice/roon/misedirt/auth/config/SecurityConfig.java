@@ -30,7 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //    @Autowired
 //    private JwtAuthCheckFilter jwtAuthCheckFilter;
 
-    private final String JWT_GENERATE_URL = "/jwt/generate";
+    //    private final String JWT_GENERATE_URL = "/jwt/generate";
+    private final String JWT_GENERATE_URL = "/processLogin";
 
     // TODO
     // JwtLoginFilter can't be set as '@Component'. But need to be spring bean. So I tried this way.
@@ -67,19 +68,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http = http.cors().and()
                 .csrf().disable();
 
-//        // Set session management to stateless
-//        http = http.sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and();
-
-        // Set unauthorized requests exception handler ??
-        http = http.exceptionHandling()
-                .authenticationEntryPoint(
-                        (request, response, e) -> {
-                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
-                        }
-                )
+        // Set session management to stateless
+        http = http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and();
+
+//        // Set unauthorized requests exception handler ??
+//        http = http.exceptionHandling()
+//                .authenticationEntryPoint(
+//                        (request, response, e) -> {
+//                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+//                        }
+//                )
+//                .and();
 
 
         // Add JWT token filter
@@ -89,17 +90,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(jwtLoginFilter(), UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeRequests()
-                .antMatchers("/", "/enroll").permitAll();
+                .antMatchers("/", "/login", "/enroll").permitAll();
 
         http.authorizeRequests()
                 .anyRequest().authenticated();
 
-        http.formLogin()
-                .loginPage("/login")
+//        http.formLogin()
+//                .loginPage("/login")
 //                .loginProcessingUrl("/processLogin")
-                .defaultSuccessUrl("/", true)
-                .failureUrl("/login")
-                .permitAll();
+//                .defaultSuccessUrl("/", true)
+//                .failureUrl("/login")
+//                .permitAll();
 
         http.logout()
                 .logoutSuccessUrl("/");

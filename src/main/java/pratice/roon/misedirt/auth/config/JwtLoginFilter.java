@@ -16,6 +16,8 @@ import pratice.roon.misedirt.auth.service.MemberService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -28,7 +30,7 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     private MemberService memberService;
 
-    public JwtLoginFilter(String defaultFilterProcessesUrl, JwtTokenUtil jwtUtil,MemberService memberService) {
+    public JwtLoginFilter(String defaultFilterProcessesUrl, JwtTokenUtil jwtUtil, MemberService memberService) {
         super(defaultFilterProcessesUrl);
         this.jwtUtil = jwtUtil;
         this.memberService = memberService;
@@ -37,19 +39,18 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
 
-//        String username = request.getParameter("username");
-//        String password = request.getParameter("password");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
-        SecurityContextImpl securityContext = (SecurityContextImpl) request.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
-        return securityContext.getAuthentication();
+//        SecurityContextImpl securityContext = (SecurityContextImpl) request.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
+//        return securityContext.getAuthentication();
 
 //        UserDetails userDetails = (UserDetails) securityContext.getAuthentication().getPrincipal();
 //        String username = userDetails.getUsername();
 //        String password = memberService.loadUserByUsername(username).getPassword();
-//        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
-//        return getAuthenticationManager().authenticate(authToken);
 
-
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
+        return getAuthenticationManager().authenticate(authToken);
     }
 
     @Override
@@ -58,20 +59,21 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
 
-        log.info("authResult = "+authResult);
+        log.info("authResult = " + authResult);
 
         String username = ((AuthDTO) authResult.getPrincipal()).getUsername();
 
         String token = null;
 
-        try{
+        try {
             token = jwtUtil.generateToken(username);
             response.setContentType("text/plain");
-            response.getOutputStream().write(token.getBytes(StandardCharsets.UTF_8));
+//            response.getOutputStream().write(token.getBytes(StandardCharsets.UTF_8));
+            response.setHeader("jwt", token);
 
-            log.info("generated token = "+token);
+            log.info("generated token = " + token);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
