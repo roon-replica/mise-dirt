@@ -28,7 +28,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private MemberService memberService;
 
     @Autowired
-    private JwtTokenFilter jwtTokenFilter;
+    private JwtAuthCheckFilter jwtAuthCheckFilter;
+
+    private final String JWT_GENERATE_URL = "/jwt/generate";
+
+    // TODO
+    // JwtLoginFilter can't be set as '@Component'. But need to be spring bean. So I tried this way.
+    // Not familiar. Is this right?
+    @Bean
+    public JwtLoginFilter jwtLoginFilter() throws Exception {
+        JwtLoginFilter jwtLoginFilter = new JwtLoginFilter(JWT_GENERATE_URL, jwtUtil());
+
+        // TODO: why this code needed?
+        jwtLoginFilter.setAuthenticationManager(authenticationManager());
+
+        return jwtLoginFilter;
+    }
+
+    @Bean
+    public JwtTokenUtil jwtUtil() {
+        return new JwtTokenUtil();
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -58,8 +78,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         // Add JWT token filter
-        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthCheckFilter, UsernamePasswordAuthenticationFilter.class);
 
+        // add JWT login(+ generate) filter
+        http.addFilterBefore(jwtLoginFilter(), UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeRequests()
                 .antMatchers("/", "/enroll").permitAll();
@@ -70,7 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .loginPage("/login")
 //                .loginProcessingUrl("/processLogin")
-                .defaultSuccessUrl("/mise/main", true)
+                .defaultSuccessUrl("/", true)
 //                .failureUrl("/login")
                 .permitAll();
 

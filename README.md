@@ -1,9 +1,9 @@
 ### 기획 아이디어
--[X] 현재 미세먼지 측정치
--[X] 미세먼지 수치(PM 값)에 따라 색상 표시하기
+- [X] 현재 미세먼지 측정치
+- [X] 미세먼지 수치(PM 값)에 따라 색상 표시하기
 
--[ ] 미세먼지 예보 알려주기
--[ ] 도시별 미세먼지 정보 선택해서 볼 수 있도록 하기
+- [ ] 미세먼지 예보 알려주기
+- [ ] 도시별 미세먼지 정보 선택해서 볼 수 있도록 하기
 
 ### 사용한 공공 API
 - https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15073861
@@ -13,9 +13,14 @@
 - [thymeleaf로 html class 동적으로 추가하기 ](https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=writer0713&logNo=221465984855)
 - [기존 테이블에 외래키 추가하기](https://hoho325.tistory.com/62)
 - [테이블 DDL 확인하기](https://stackoverflow.com/questions/201621/how-do-i-see-all-foreign-keys-to-a-table-or-column)
-- form login
+- spring security form login
   - https://spring.io/guides/gs/securing-web/
   - https://www.baeldung.com/spring-security-login
+
+- spring security with JWT
+  - [spring security with JWT for REST API tutorial](https://www.toptal.com/spring/spring-security-tutorial)
+  - [how to decode jwt in java](https://www.baeldung.com/java-jwt-token-decode)
+  - [jwt decoder online](https://jwt.io/)
 
 ### TODO
 - [ ] 캐시 적용
@@ -53,6 +58,9 @@
   
 - [ ] 보안적 이슈 없는지 (csrf, xss)
 - [ ] JWT 적용해서 API 인증된 사람만 호출할 수 있도록 하기
+   - [x] validate jwt token
+   - [x] generate jwt token
+   - [ ] UI / UX
 - [x] 미세먼지 pm값에 따라 화면에 표시할 때 색상 표시하기
 - [ ] OPEN API 서버가 터졌을 때 대응 정책
   1. 캐시된거 보여주기
