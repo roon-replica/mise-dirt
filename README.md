@@ -21,7 +21,8 @@
   - [spring security with JWT for REST API tutorial](https://www.toptal.com/spring/spring-security-tutorial)
   - [how to decode jwt in java](https://www.baeldung.com/java-jwt-token-decode)
   - [jwt decoder online](https://jwt.io/)
-
+  - [servlet filter에서 로그인한 사용자 정보 확인하기](https://stackoverflow.com/questions/26126586/spring-security-access-the-current-authenticated-user-inside-a-servlet-filter)
+  
 ### TODO
 - [ ] 캐시 적용
   - [x] 로컬 캐시

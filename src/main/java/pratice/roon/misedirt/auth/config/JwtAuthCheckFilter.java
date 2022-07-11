@@ -2,6 +2,7 @@ package pratice.roon.misedirt.auth.config;
 
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -17,8 +18,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Base64;
 
+@Slf4j
 @RequiredArgsConstructor
-@Component
+//@Component
 public class JwtAuthCheckFilter extends OncePerRequestFilter {
     private final JwtTokenUtil jwtTokenUtil;
 //    private final MemberRepository memberRepository;
@@ -55,7 +57,7 @@ public class JwtAuthCheckFilter extends OncePerRequestFilter {
             SIGNATURE = new String(decoder.decode(chunks[2]));
         }
 
-        System.out.println(HEADER + " " + PAY_LOAD + " " + SIGNATURE);
+        log.info("token : " + HEADER + " " + PAY_LOAD + " " + SIGNATURE);
 
         String tokenWithoutSignature = chunks[0] + "." + chunks[1];
         String signature = chunks[2];

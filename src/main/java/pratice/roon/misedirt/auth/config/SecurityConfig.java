@@ -27,8 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MemberService memberService;
 
-    @Autowired
-    private JwtAuthCheckFilter jwtAuthCheckFilter;
+//    @Autowired
+//    private JwtAuthCheckFilter jwtAuthCheckFilter;
 
     private final String JWT_GENERATE_URL = "/jwt/generate";
 
@@ -37,12 +37,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // Not familiar. Is this right?
     @Bean
     public JwtLoginFilter jwtLoginFilter() throws Exception {
-        JwtLoginFilter jwtLoginFilter = new JwtLoginFilter(JWT_GENERATE_URL, jwtUtil());
+        JwtLoginFilter jwtLoginFilter = new JwtLoginFilter(JWT_GENERATE_URL, jwtUtil(), memberService);
 
         // TODO: why this code needed?
         jwtLoginFilter.setAuthenticationManager(authenticationManager());
 
         return jwtLoginFilter;
+    }
+
+    @Bean
+    public JwtAuthCheckFilter jwtAuthCheckFilter() {
+        return new JwtAuthCheckFilter(jwtUtil());
     }
 
     @Bean
@@ -62,10 +67,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http = http.cors().and()
                 .csrf().disable();
 
-        // Set session management to stateless
-        http = http.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and();
+//        // Set session management to stateless
+//        http = http.sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and();
 
         // Set unauthorized requests exception handler ??
         http = http.exceptionHandling()
@@ -78,7 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         // Add JWT token filter
-        http.addFilterBefore(jwtAuthCheckFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthCheckFilter(), UsernamePasswordAuthenticationFilter.class);
 
         // add JWT login(+ generate) filter
         http.addFilterBefore(jwtLoginFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -93,7 +98,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
 //                .loginProcessingUrl("/processLogin")
                 .defaultSuccessUrl("/", true)
-//                .failureUrl("/login")
+                .failureUrl("/login")
                 .permitAll();
 
         http.logout()
