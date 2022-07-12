@@ -8,12 +8,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pratice.roon.misedirt.auth.dto.AuthDTO;
-import pratice.roon.misedirt.auth.entity.Member;
-import pratice.roon.misedirt.auth.repository.MemberRepository;
+import pratice.roon.misedirt.common.entity.Member;
+import pratice.roon.misedirt.common.repository.MemberRepository;
 
 import java.util.Arrays;
 
-@Service
+@Service("auth")
 public class MemberService implements UserDetailsService {
     @Autowired
     private MemberRepository memberRepository;
@@ -43,8 +43,6 @@ public class MemberService implements UserDetailsService {
                 .username(username)
                 .password(password)
                 .build();
-
-
 
         memberRepository.save(member);
     }

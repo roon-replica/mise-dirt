@@ -1,16 +1,13 @@
-package pratice.roon.misedirt.auth.repository;
+package pratice.roon.misedirt.common.repository;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import pratice.roon.misedirt.auth.entity.Member;
-import pratice.roon.misedirt.auth.entity.MemberRole;
+import pratice.roon.misedirt.common.entity.Member;
+import pratice.roon.misedirt.common.entity.MemberRole;
 
 import java.util.stream.IntStream;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class MemberRepositoryTest {

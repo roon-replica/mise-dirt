@@ -1,4 +1,4 @@
-package pratice.roon.misedirt.auth.entity;
+package pratice.roon.misedirt.common.entity;
 
 public enum MemberRole {
     GUEST, USER, ADMIN
