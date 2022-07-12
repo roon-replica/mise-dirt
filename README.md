@@ -45,7 +45,7 @@
   - [x] form 로그인
   - [ ] 소셜 로그인
   
-- [ ] remember me
+- [ ] remember me?
   
 - [x] override default cache-control header
   
@@ -66,10 +66,7 @@
 - [ ] OPEN API 서버가 터졌을 때 대응 정책
   1. 캐시된거 보여주기
   2. cache 초기화되면 DB에 있는 가장 최근거 보여주기
-
-
-- [ ] 예외 처리
-  - [ ] OPEN API가 응답하지 않을 때
+  
   
 
 ### 생각해 볼 사항들

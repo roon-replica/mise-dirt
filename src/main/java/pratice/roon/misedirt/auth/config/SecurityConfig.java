@@ -70,30 +70,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Set session management to stateless
         http = http.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 .and();
 
-//        // Set unauthorized requests exception handler ??
-//        http = http.exceptionHandling()
-//                .authenticationEntryPoint(
-//                        (request, response, e) -> {
-//                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
-//                        }
-//                )
-//                .and();
+        // Set unauthorized requests exception handler ??
+        http = http.exceptionHandling()
+                .authenticationEntryPoint(
+                        (request, response, e) -> {
+                            e.printStackTrace();
+                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+                        }
+                )
+                .and();
 
+
+        http.authorizeRequests()
+                .antMatchers("/", "/login", "/enroll").permitAll()
+                .antMatchers("/mise/main").hasAnyAuthority("USER")
+                .and();
+//                .anyRequest().authenticated();
 
         // Add JWT token filter
         http.addFilterBefore(jwtAuthCheckFilter(), UsernamePasswordAuthenticationFilter.class);
 
         // add JWT login(+ generate) filter
         http.addFilterBefore(jwtLoginFilter(), UsernamePasswordAuthenticationFilter.class);
-
-        http.authorizeRequests()
-                .antMatchers("/", "/login", "/enroll").permitAll();
-
-        http.authorizeRequests()
-                .anyRequest().authenticated();
 
 //        http.formLogin()
 //                .loginPage("/login")
@@ -102,8 +104,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .failureUrl("/login")
 //                .permitAll();
 
-        http.logout()
-                .logoutSuccessUrl("/");
+//        http.logout()
+//                .logoutSuccessUrl("/");
+
+        http.formLogin().disable();
 
     }
 }

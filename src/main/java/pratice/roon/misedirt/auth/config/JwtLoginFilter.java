@@ -8,6 +8,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.stereotype.Component;
 import pratice.roon.misedirt.auth.dto.AuthDTO;
@@ -18,6 +19,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -30,10 +32,18 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     private MemberService memberService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public JwtLoginFilter(String defaultFilterProcessesUrl, JwtTokenUtil jwtUtil, MemberService memberService) {
         super(defaultFilterProcessesUrl);
         this.jwtUtil = jwtUtil;
         this.memberService = memberService;
+    }
+
+    @Override
+    public void setFilterProcessesUrl(String filterProcessesUrl) {
+        super.setFilterProcessesUrl("/processLogin");
     }
 
     @Override
@@ -50,7 +60,10 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
 //        String password = memberService.loadUserByUsername(username).getPassword();
 
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
-        return getAuthenticationManager().authenticate(authToken);
+        Authentication auth = getAuthenticationManager().authenticate(authToken);
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
+        return auth;
     }
 
     @Override

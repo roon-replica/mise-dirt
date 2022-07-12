@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import pratice.roon.misedirt.auth.repository.MemberRepository;
@@ -25,7 +27,7 @@ public class JwtAuthCheckFilter extends OncePerRequestFilter {
     private final JwtTokenUtil jwtTokenUtil;
 //    private final MemberRepository memberRepository;
 
-    private final String AUTH_CHECK_PATH = "/mise/**/*";
+    private final String AUTH_CHECK_PATH = "/mise/";
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
@@ -39,13 +41,20 @@ public class JwtAuthCheckFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
-        final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (header.isEmpty() || !header.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
+//        final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+////        if (header.isEmpty() || !header.startsWith("Bearer ")) {
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
+//
+//        String[] chunks = header.split("\\.");
+
+        if(request.getParameter("jwt") == null){
+            filterChain.doFilter(request,response);
             return;
         }
 
-        String[] chunks = header.split("\\.");
+        String[] chunks = request.getParameter("jwt").split("\\.");
 
         Base64.Decoder decoder = Base64.getUrlDecoder();
 

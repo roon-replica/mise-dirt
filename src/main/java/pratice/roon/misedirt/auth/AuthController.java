@@ -1,6 +1,7 @@
 package pratice.roon.misedirt.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SpringWebConstraintValidatorFactory;
@@ -40,6 +41,11 @@ public class AuthController {
         memberService.enrollUser(signUpDTO.getUsername(), signUpDTO.getPassword());
 
         return new RedirectView("/");
+    }
+
+    @GetMapping("/username")
+    public String getUsername(){
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
 }
