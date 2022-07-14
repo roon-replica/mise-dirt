@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import pratice.roon.misedirt.common.entity.Member;
 import pratice.roon.misedirt.common.repository.MemberRepository;
 
+import java.util.List;
+
 @Service("common")
 public class MemberService {
     @Autowired
@@ -23,5 +25,9 @@ public class MemberService {
 
     public Member findByUsername(String username){
         return memberRepository.findByUsername(username);
+    }
+
+    public List<Member> findMembers(){
+        return memberRepository.findAll();
     }
 }

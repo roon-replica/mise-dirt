@@ -2,11 +2,9 @@ package pratice.roon.misedirt.common.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,6 +24,9 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     MemberRole memberRole;
+
+//    @OneToMany(mappedBy = "member")
+//    List<Order> orders;
 
     public void setMemberRole(MemberRole memberRole){
         this.memberRole = memberRole;
