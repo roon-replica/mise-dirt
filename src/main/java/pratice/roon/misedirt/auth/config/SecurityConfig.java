@@ -87,7 +87,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/", "/login", "/enroll").permitAll()
-                .antMatchers("/mise/main").hasAnyAuthority("USER")
+
+                // todo:와... 이거때문에 jwt인증이 안된거처럼 보인거였다.. jwt 인증은 됐었는데 "ROLE_" 안 붙여서... 권한없다고 필터에서 걸러진거였다....
+                .antMatchers("/mise/main").hasAnyAuthority("ROLE_USER")
+
                 .and();
 //                .anyRequest().authenticated();
 
