@@ -45,9 +45,9 @@
 
             })
             .then(response => {
-                sessionStorage.setItem("jwt",response);
-                alert('you are signed in. and token is issued.');
-                window.location.href = '/';
+                sessionStorage.setItem("jwt", response);
+                alert('you are signed in. token is issued.');
+                window.location.href = '/mise/main?jwt=' + response;
             });
 
 
@@ -73,7 +73,6 @@
         //     if (response.ok) return response.json();
         //     else return null;
         // }).catch(error => null);
-
 
 
     });

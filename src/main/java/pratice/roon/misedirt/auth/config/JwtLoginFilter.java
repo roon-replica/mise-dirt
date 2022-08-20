@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 @Slf4j
 public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
@@ -51,7 +52,7 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
 //        String password = memberService.loadUserByUsername(username).getPassword();
 
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
-        Authentication auth = getAuthenticationManager().authenticate(authToken);
+        Authentication auth = getAuthenticationManager().authenticate(authToken);   //todo: 여기서 bad credential exception 발생
         SecurityContextHolder.getContext().setAuthentication(auth);
 
         return auth;
@@ -72,7 +73,7 @@ public class JwtLoginFilter extends AbstractAuthenticationProcessingFilter {
         try {
             token = jwtUtil.generateToken(username);
             response.setContentType("text/plain");
-//            response.getOutputStream().write(token.getBytes(StandardCharsets.UTF_8));
+            // response.getOutputStream().write(token.getBytes(StandardCharsets.UTF_8));
             response.setHeader("jwt", token);
 
             log.info("generated token = " + token);

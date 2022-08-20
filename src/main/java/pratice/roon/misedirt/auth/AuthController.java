@@ -2,6 +2,7 @@ package pratice.roon.misedirt.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SpringWebConstraintValidatorFactory;
@@ -16,6 +17,9 @@ import pratice.roon.misedirt.auth.service.MemberService;
 public class AuthController {
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
     public String login(){
@@ -38,7 +42,7 @@ public class AuthController {
             throw new IllegalArgumentException("password != matching password");
         }
 
-        memberService.enrollUser(signUpDTO.getUsername(), signUpDTO.getPassword());
+        memberService.enrollUser(signUpDTO.getUsername(), passwordEncoder.encode(signUpDTO.getPassword()));
 
         return new RedirectView("/");
     }

@@ -95,7 +95,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(jwtAuthCheckFilter(), UsernamePasswordAuthenticationFilter.class);
 
         // add JWT login(+ generate) filter
-        http.addFilterBefore(jwtLoginFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtLoginFilter(),  jwtAuthCheckFilter().getClass());
 
 //        http.formLogin()
 //                .loginPage("/login")
@@ -107,7 +107,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.logout()
 //                .logoutSuccessUrl("/");
 
-        http.formLogin().disable();
+//        http.formLogin().disable();
 
     }
 }
