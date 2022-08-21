@@ -66,8 +66,12 @@
 - [ ] OPEN API 서버가 터졌을 때 대응 정책
   1. 캐시된거 보여주기
   2. cache 초기화되면 DB에 있는 가장 최근거 보여주기
-  
-  
+
+- [ ] put 대신 patch 써보기
+  - 참고
+    - https://www.baeldung.com/http-put-patch-difference-spring
+    - https://stackoverflow.com/questions/41390997/why-patch-is-neither-safe-nor-idempotent
+  - put, patch의 성능 자체는 heavy한 dto가 아니면 차이가 없는듯..
 
 ### 생각해 볼 사항들
 - [ ] pm 색상 설정하는 로직 개선할 수 없을지...

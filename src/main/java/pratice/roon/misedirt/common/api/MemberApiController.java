@@ -34,7 +34,17 @@ public class MemberApiController {
 
         memberService.update(username, request.getUsername());
 
-        return new UpdateMemberResponse(request.getUsername());
+        return new UpdateMemberResponse(request.getUsername(), request.getMemberRole());
+    }
+
+    // patch is not idempotent nor safe.
+    @PatchMapping("/api/v2/members/{username}")
+    public UpdateMemberResponse updateMemberNameOnly(@PathVariable("username") String username,
+                                                     @RequestBody UpdateMemberNameOnly partialUpdate) {
+
+        Member member = memberService.getUserByName(username);
+        memberService.update(username, partialUpdate.getUsername());
+        return new UpdateMemberResponse(member.getUsername(), member.getMemberRole());
     }
 
     @GetMapping("/api/v1/members")
