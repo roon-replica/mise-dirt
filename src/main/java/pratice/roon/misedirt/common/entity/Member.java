@@ -11,10 +11,12 @@ import java.util.List;
 @ToString
 @Builder
 @Getter
-@Setter
 @Entity
 public class Member {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String username;
 
     @NotEmpty
@@ -28,7 +30,11 @@ public class Member {
 //    @OneToMany(mappedBy = "member")
 //    List<Order> orders;
 
-    public void setMemberRole(MemberRole memberRole){
+    public void setMemberRole(MemberRole memberRole) {
         this.memberRole = memberRole;
+    }
+
+    public void update(String username) {
+        this.username = username;
     }
 }

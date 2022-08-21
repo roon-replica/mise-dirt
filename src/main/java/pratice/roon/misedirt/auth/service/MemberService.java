@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pratice.roon.misedirt.auth.dto.AuthDTO;
 import pratice.roon.misedirt.common.entity.Member;
 import pratice.roon.misedirt.common.entity.MemberRole;
+import pratice.roon.misedirt.common.exception.MemberNotFoundException;
 import pratice.roon.misedirt.common.repository.MemberRepository;
 
 import java.util.Arrays;
@@ -22,7 +23,8 @@ public class MemberService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = memberRepository.findByUsername(username);
+        Member member = memberRepository.findByUsername(username)
+                .orElseThrow(() -> new MemberNotFoundException("member with " + username +" not exist"));
 
         if (member == null) {
             throw new UsernameNotFoundException("username with " + username + " not exist");

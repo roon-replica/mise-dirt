@@ -1,7 +1,5 @@
 package pratice.roon.misedirt.common.api;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
@@ -20,40 +18,44 @@ public class MemberApiController {
     private MemberService memberService;
 
     @PostMapping("/api/v1/members")
-    public CreateMemberResponse saveMemberV1(@RequestBody @Valid Member member) {
-        String username = memberService.saveMember(member);
-        return new CreateMemberResponse(username);
+    public Long saveMemberV1(@RequestBody @Valid Member member) {
+        return memberService.createMember(member.getUsername(), member.getPassword(), member.getMemberRole());
     }
 
     @PostMapping("/api/v2/members")
-    public CreateMemberResponse saveMemberV2(@RequestBody @Valid CreateMemberRequest request) {
-        String username = memberService.saveMember(Member.builder().username(request.getUsername()).build());
-        return new CreateMemberResponse(username);
+    public Long saveMemberV2(@RequestBody @Valid CreateMemberRequest request) {
+        return memberService.createMember(request.getUsername(), request.getPassword(), request.getMemberRole());
     }
 
     @PutMapping("/api/v2/members/{username}")
     public UpdateMemberResponse updateMemberV2(
             @PathVariable("username") String username,
-            @RequestBody UpdateMemberRequest request
-    ) {
+            @RequestBody UpdateMemberRequest request) {
+
         memberService.update(username, request.getUsername());
-        Member member = memberService.findByUsername(username);
-        return new UpdateMemberResponse(member.getUsername());
+
+        return new UpdateMemberResponse(request.getUsername());
     }
 
     @GetMapping("/api/v1/members")
-    public List<Member> membersV1(){
+    public List<Member> membersV1() {
         return memberService.findMembers();
     }
 
     @GetMapping("/api/v2/members")
-    public Response membersV2(){
-        List<FindMemberResponse> members = memberService.findMembers().stream()
-                .map( member -> new FindMemberResponse(member.getUsername()))
+    public Response<List<MemberResponse>> membersV2() {
+        List<MemberResponse> members = memberService.findMembers().stream()
+                .map(member -> MemberResponse.builder()
+                        .username(member.getUsername())
+                        .memberRole(member.getMemberRole().name())
+                        .build()
+                )
                 .collect(Collectors.toList());
 
-        return Response.builder()
-                .data(members)
-                .build();
+//        return Response.builder()
+//                .data(members)
+//                .build();
+
+        return new Response<>(members);
     }
 }
