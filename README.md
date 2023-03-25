@@ -1,3 +1,10 @@
+### 목표
+- 첫 동기는 유용한 서비스를 만들어본 적이 없어서..  
+  유용한 것을 만들어야 말그대로 개발자라고 할 수 있으니까 시작함  
+- 23년 3월에 다시보니 서비스 피처보단 기술 적용 플레이그라운드로 쓰고 있는듯?  
+  기술 적용 플레이그라운드 + 유용한 기능 제공 2가지가 지금 목표인듯?
+
+
 ### 기획 아이디어
 - [X] 현재 미세먼지 측정치
 - [X] 미세먼지 수치(PM 값)에 따라 색상 표시하기
@@ -34,29 +41,22 @@
 - [ ] encoded auth key 사용하도록 변경 필요
 - [x] 프로퍼티 파일 여러개 설정하기
   - https://blog.jiniworld.me/81
-
 - [x] 미세먼지 API 불러올 때 마다 DB에 저장해보기
 - [ ] 도시별 미세먼지 정보 선택할 수 있도록 하기
 - [ ] 페이지네이션
-  
 - [ ] nginx 연결하기
 - [ ] aws에 배포해보기
 - [ ] 로그인 구현하기
   - [x] form 로그인
   - [ ] 소셜 로그인
-  
 - [ ] remember me?
-  
 - [x] override default cache-control header
-  
 - [ ] custom logout
-
 - [ ] 회원가입 구현
   - [x] 회원 가입
     - [x] validate DTO
   - [ ] 회원 정보 수정
   - [ ] 탈퇴
-  
 - [ ] 보안적 이슈 없는지 (csrf, xss)
 - [ ] JWT 적용해서 API 인증된 사람만 호출할 수 있도록 하기
    - [x] validate jwt token
@@ -66,8 +66,7 @@
 - [ ] OPEN API 서버가 터졌을 때 대응 정책
   1. 캐시된거 보여주기
   2. cache 초기화되면 DB에 있는 가장 최근거 보여주기
-
-- [ ] put 대신 patch 써보기
+- [x] put 대신 patch 써보기
   - 참고
     - https://www.baeldung.com/http-put-patch-difference-spring
     - https://stackoverflow.com/questions/41390997/why-patch-is-neither-safe-nor-idempotent
@@ -75,5 +74,4 @@
 
 ### 생각해 볼 사항들
 - [ ] pm 색상 설정하는 로직 개선할 수 없을지...
-- [ ] m1 맥에는 mysql workbench 설치 안 되는 듯...
 - [ ] 지역 테이블이 미세먼지 테이블의 외래키를 가지고 있어야 하나? 아니면 반대여야 하나?
